@@ -1,5 +1,3 @@
-
-
 var mongo = require('mongodb'); //module to manipulate mongoDB.
 
 var MongoClient = require('mongodb').MongoClient;
@@ -32,4 +30,15 @@ MongoClient.connect(url, function(err ,db){
 		db.close;
 	});
 });
+
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("mydb");
+	dbo.collecton("costumers").findOne({}, function(err, result){ // find de first document in the 'cliente' collection
+		if(err) throw err;
+		console.log(result.name);
+		db.close();
+	});
+});
+
 	
