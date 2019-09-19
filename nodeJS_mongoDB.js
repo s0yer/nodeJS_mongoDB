@@ -10,6 +10,7 @@ MongoClient.connect(url, function(err, db){
 	db.close();
 });
 
+// create ------------------------------------------
 MongoClient.connect(url, function(err,db){
 	if(err) throw err;
 	var dbo = db.db("newDataBase");
@@ -20,6 +21,8 @@ MongoClient.connect(url, function(err,db){
 	});
 });
 
+
+// insert -------------------------------------------
 MongoClient.connect(url, function(err ,db){
 	if(err) throw err;
 	var dbo = db.db("newDataBase");
@@ -31,6 +34,29 @@ MongoClient.connect(url, function(err ,db){
 	});
 });
 
+MongoClient.connect(url, function(err ,db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	var myObj = { name: " THONX Materiais", address: "Santa Catarina"}; // Object to be insertOne
+	dbo.collection("clientes").insertOne(myObj, function(err, res){ // inset the object in the 'clientes' collection
+		if(err) throw err;
+		console.log("Um contato adicionado!");
+		db.close;
+	});
+});
+
+MongoClient.connect(url, function(err ,db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	var myObj = { name: " IKITOS Materia prima", address: "Sao José"}; // Object to be insertOne
+	dbo.collection("clientes").insertOne(myObj, function(err, res){ // inset the object in the 'clientes' collection
+		if(err) throw err;
+		console.log("Um contato adicionado!");
+		db.close;
+	});
+});
+
+// find -----------------------------------------------
 MongoClient.connect(url, function(err, db){
 	if(err) throw err;
 	var dbo = db.db("mydb");
@@ -41,4 +67,26 @@ MongoClient.connect(url, function(err, db){
 	});
 });
 
-	
+// query -----------------------------------------------
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("mydb");
+	var query = {adress: Santa Catarina};
+	dbo.collecton("costumers").find(query).toArray(function(err, result){ // find document in a collection, filter the result to limit your search.
+		if(err) throw err;
+		console.log(result);
+		db.close();
+	});
+});
+
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("mydb");
+	var query = {adress: /^S/}; //filter with regular expression, in this case the address that starts with 'S'
+	dbo.collecton("costumers").find(query).toArray(function(err, result){ // find document in a collection, filter the result to limit your search.
+		if(err) throw err;
+		console.log(result);
+		db.close();
+	});
+});
+
