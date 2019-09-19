@@ -59,8 +59,8 @@ MongoClient.connect(url, function(err ,db){
 // find -----------------------------------------------
 MongoClient.connect(url, function(err, db){
 	if(err) throw err;
-	var dbo = db.db("mydb");
-	dbo.collecton("costumers").findOne({}, function(err, result){ // find de first document in the 'cliente' collection
+	var dbo = db.db("newDataBase");
+	dbo.collection("clientes").findOne({}, function(err, result){ // find de first document in the 'cliente' collection
 		if(err) throw err;
 		console.log(result.name);
 		db.close();
@@ -70,9 +70,9 @@ MongoClient.connect(url, function(err, db){
 // query -----------------------------------------------
 MongoClient.connect(url, function(err, db){
 	if(err) throw err;
-	var dbo = db.db("mydb");
-	var query = {adress: Santa Catarina};
-	dbo.collecton("costumers").find(query).toArray(function(err, result){ // find document in a collection, filter the result to limit your search.
+	var dbo = db.db("newDataBase");
+	var query = {adress:"Santa Catarina"};
+	dbo.collection("clientes").find(query).toArray(function(err, result){ // find document in a collection, filter the result to limit your search.
 		if(err) throw err;
 		console.log(result);
 		db.close();
@@ -81,9 +81,9 @@ MongoClient.connect(url, function(err, db){
 
 MongoClient.connect(url, function(err, db){
 	if(err) throw err;
-	var dbo = db.db("mydb");
+	var dbo = db.db("newDataBase");
 	var query = {adress: /^S/}; //filter with regular expression, in this case the address that starts with 'S'
-	dbo.collecton("costumers").find(query).toArray(function(err, result){ // find document in a collection, filter the result to limit your search.
+	dbo.collection("clientes").find(query).toArray(function(err, result){ // find document in a collection, filter the result to limit your search.
 		if(err) throw err;
 		console.log(result);
 		db.close();
