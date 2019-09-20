@@ -67,6 +67,27 @@ MongoClient.connect(url, function(err, db){
 	});
 });
 
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	dbo.collection("clientes").find({}).toArray(function(err, result){ // find all documents
+		if(err) throw err;
+		console.log(result.name);
+		db.close();
+	});
+});
+
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	dbo.collection("clientes").find({}, { projection: {_id: 0, name: 1}).toArray(function(err, result){ // find all documents, the address is omitted and only name appear
+		if(err) throw err;
+		console.log(result.name);
+		console.log(result[1].address); // returns the address of 2º document
+		db.close();
+	});
+});
+
 // query -----------------------------------------------
 MongoClient.connect(url, function(err, db){
 	if(err) throw err;
@@ -89,4 +110,17 @@ MongoClient.connect(url, function(err, db){
 		db.close();
 	});
 });
+
+// sort ---------------------------------------------------
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	var varSort = {name: 1};
+	dbo.collection("clientes").find().sort(varSort).toArray(function(err, result){ // result alphabetically
+		if(err) throw err;
+		console.log(result);
+		db.close();
+	});
+});
+
 
