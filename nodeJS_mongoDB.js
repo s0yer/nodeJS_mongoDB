@@ -115,12 +115,39 @@ MongoClient.connect(url, function(err, db){
 MongoClient.connect(url, function(err, db){
 	if(err) throw err;
 	var dbo = db.db("newDataBase");
-	var varSort = {name: 1};
-	dbo.collection("clientes").find().sort(varSort).toArray(function(err, result){ // result alphabetically
+	var varSort = {name: 1}; // result alphabetically '1'
+	dbo.collection("clientes").find().sort(varSort).toArray(function(err, result){ 
 		if(err) throw err;
 		console.log(result);
 		db.close();
 	});
 });
+
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	var varSort = {name: -1}; // reverse '-1'
+	dbo.collection("clientes").find().sort(varSort).toArray(function(err, result){ 
+		if(err) throw err;
+		console.log(result);
+		db.close();
+	});
+});
+
+// delete ---------------------------------------------------
+
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	var delObj = {addres: Santa Catarina};
+	dbo.collection("clientes").deleteOne(delObj, function(err, result){  // del the document -> delObj
+		if(err) throw err;
+		console.log(" 1 documento foi deletado");
+		db.close();
+	});
+});
+
+// drop collection -------------------------------------------
+
 
 
