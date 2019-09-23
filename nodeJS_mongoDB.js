@@ -139,7 +139,7 @@ MongoClient.connect(url, function(err, db){
 MongoClient.connect(url, function(err, db){
 	if(err) throw err;
 	var dbo = db.db("newDataBase");
-	var delObj = {addres: Santa Catarina};
+	var delObj = {addres: 'Santa Catarina'};
 	dbo.collection("clientes").deleteOne(delObj, function(err, result){  // del the document -> delObj
 		if(err) throw err;
 		console.log(" 1 documento foi deletado");
@@ -149,5 +149,13 @@ MongoClient.connect(url, function(err, db){
 
 // drop collection -------------------------------------------
 
-
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	dbo.dropCollection("clientes", function(err, deleteOk){  // delete the colection "clientes"
+		if(err) throw err;
+		if(deleteOk) console.log(" Collection deleted");
+		db.close();
+	});
+});
 
