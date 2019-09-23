@@ -134,13 +134,25 @@ MongoClient.connect(url, function(err, db){
 	});
 });
 
-// delete ---------------------------------------------------
+// update ---------------------------------------------------
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	var varQuery = {address: 'Santa Catarina'}; 
+	var newValues =  {$set: {name: "UBUtOs Tecnology"}
+	dbo.collection("clientes").updateMany(myquery, newValues, function(err, res){ 
+		if(err) throw err;
+		console.log(res.result.nModified + "document updated");
+		db.close();
+	});
+});
 
+// delete ---------------------------------------------------
 MongoClient.connect(url, function(err, db){
 	if(err) throw err;
 	var dbo = db.db("newDataBase");
 	var delObj = {addres: 'Santa Catarina'};
-	dbo.collection("clientes").deleteOne(delObj, function(err, result){  // del the document -> delObj
+	dbo.collection("clientes").deleteOne(delObj, function(err, obj){  // del the document -> delObj
 		if(err) throw err;
 		console.log(" 1 documento foi deletado");
 		db.close();
@@ -148,7 +160,6 @@ MongoClient.connect(url, function(err, db){
 });
 
 // drop collection -------------------------------------------
-
 MongoClient.connect(url, function(err, db){
 	if(err) throw err;
 	var dbo = db.db("newDataBase");
