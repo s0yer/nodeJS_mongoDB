@@ -139,10 +139,20 @@ MongoClient.connect(url, function(err, db){
 	if(err) throw err;
 	var dbo = db.db("newDataBase");
 	var varQuery = {address: 'Santa Catarina'}; 
-	var newValues =  {$set: {name: "UBUtOs Tecnology"}
+	var newValues =  {$set: {name: "UBUtOs Tecnology"} // update object with address = 'Santa Catarina'
 	dbo.collection("clientes").updateMany(myquery, newValues, function(err, res){ 
 		if(err) throw err;
 		console.log(res.result.nModified + "document updated");
+		db.close();
+	});
+});
+// limit ----------------------------------------------------
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	dbo.collection("clientes").find().limit(2).toArray(function(err, result){ // return only 2 documents
+		if(err) throw err;
+		console.log(result);
 		db.close();
 	});
 });
