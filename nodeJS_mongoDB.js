@@ -21,6 +21,26 @@ MongoClient.connect(url, function(err,db){
 	});
 });
 
+MongoClient.connect(url, function(err,db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	dbo.createCollection("ordens", function(err, res){ // create a collection called "ordens"
+		if(err) throw err;
+		console.log("Collection created!");
+		db.close();
+	});
+});
+
+MongoClient.connect(url, function(err,db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	dbo.createCollection("produtos", function(err, res){ // create a collection called "produtos"
+		if(err) throw err;
+		console.log("Collection created!");
+		db.close();
+	});
+});
+
 
 // insert -------------------------------------------
 MongoClient.connect(url, function(err ,db){
@@ -50,6 +70,28 @@ MongoClient.connect(url, function(err ,db){
 	var dbo = db.db("newDataBase");
 	var myObj = { name: " IKITOS Materia prima", address: "Sao José"}; // Object to be insertOne
 	dbo.collection("clientes").insertOne(myObj, function(err, res){ // inset the object in the 'clientes' collection
+		if(err) throw err;
+		console.log("Um contato adicionado!");
+		db.close;
+	});
+});
+
+MongoClient.connect(url, function(err ,db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	var myObj = { _id: 8, name: " processador", model: "intel i7"}; 
+	dbo.collection("produto").insertOne(myObj, function(err, res){ 
+		if(err) throw err;
+		console.log("Um contato adicionado!");
+		db.close;
+	});
+});
+
+MongoClient.connect(url, function(err ,db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	var myObj = { _id: 1, produto_id: 8, estado: 1}; 
+	dbo.collection("ordens").insertOne(myObj, function(err, res){ 
 		if(err) throw err;
 		console.log("Um contato adicionado!");
 		db.close;
@@ -153,6 +195,26 @@ MongoClient.connect(url, function(err, db){
 	dbo.collection("clientes").find().limit(2).toArray(function(err, result){ // return only 2 documents
 		if(err) throw err;
 		console.log(result);
+		db.close();
+	});
+});
+
+// join -----------------------------------------------------
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("newDataBase");
+	dbo.collection('ordens').aggregate([
+		{$lookup:
+			{
+				from: 'produtos',
+				localField: 'produtos_id',
+				foreignField: '_id',
+				as: 'orderdetails'
+			}
+		}
+	]).toArray(function(err,res){
+		if(err) throw err;
+		console.log(JSON.stringify(res));
 		db.close();
 	});
 });
